@@ -1,19 +1,25 @@
 ---
-import { Post } from '../interfaces/post';
-import PostLink from '../components/PostLink.svelte';
+import { Post } from "../interfaces/post";
+import { Comment } from "../interfaces/comment";
+import { User } from "../interfaces/user";
 
 export interface Props {
-    post: Post;
+  post: Post;
+  comments: Comment[];
+  user: User;
 }
 
-const { post } = Astro.props;
+const { post, comments, user } = Astro.props;
 ---
 
 <div class="shadow-md m-5 p-5">
-    <div>
-        <h1>{post.title}</h1>
-        <p class="mt-3 mb-3">{post.body}</p>
-        <hr>
-        <PostLink client:visible userId={post.userId} postId={post.id}/> 
-    </div>
+  <div>
+    <h1>{post.title}</h1>
+    <p class="mt-3 mb-3">{post.body}</p>
+    <hr />
+    <a class="text-orange-600" href={`/user/${post.userId}`}>{user.name}</a> |
+    <a href={`/post/${post.id}/comments`}
+      >Comments: ({comments ? comments.length : 0})
+    </a>
+  </div>
 </div>

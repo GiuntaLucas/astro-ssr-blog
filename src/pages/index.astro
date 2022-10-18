@@ -1,12 +1,33 @@
 ---
-import Post from '../components/Post.astro';
-import Layout from '../layouts/Layout.astro';
-import { getPosts } from '../api/post';
+import Post from "../components/Post.astro";
+import Layout from "../layouts/Layout.astro";
+import { getPosts, getPostsByUser } from "../api/post";
+import { getComments } from "../api/comment";
+import { getUsers } from "../api/user";
 
-const posts = await getPosts();
+const url = Astro.request.url;
+const userFilteredId = url.split('=')[1];
+const posts = userFilteredId ? await getPostsByUser(+userFilteredId) : await getPosts();
+const comments = await getComments();
+const users = await getUsers();
 ---
 
 <Layout title="Welcome to Astro.">
-	{posts.map(post => <Post post={post}/>)}
-</Layout>
+  <form class="pl-5 pr-5">
+    <label for="userFilter">Users</label>
+    <select class="p-1 pl-3 pr-3" name="userFilter" id="userFilter">
+      {users.map((x) => <option value={x.id} selected={x.id == +userFilteredId}>{x.name}</option>)}
+    </select>
+    <button class="bg-purple-600 rounded p-1 pl-3 pr-3 text-white" type="submit">Search</button>
+  </form>
 
+  {
+    posts.map((post) => (
+      <Post
+        post={post}
+        comments={comments.filter((x) => x.postId === post.id)}
+        user={users.find((x) => x.id === post.userId)}
+      />
+    ))
+  }
+</Layout>

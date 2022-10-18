@@ -8,8 +8,8 @@
   let user;
   let comments;
   onMount(async () => {
-    user = await getUser(id);
-    comments = await getComment(id);
+    user = await getUser(userId);
+    comments = await getComment(postId);
   });
 </script>
 

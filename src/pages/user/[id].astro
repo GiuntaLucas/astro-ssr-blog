@@ -1,0 +1,12 @@
+---
+import { getUser } from "../../api/user";
+import Layout from "../../layouts/Layout.astro";
+
+const user = await getUser(+Astro.params.id);
+---
+
+<Layout title="Astro ssr">
+    <div class="shadow-md m-5 p-5">
+        {JSON.stringify(user)}
+    </div>
+</Layout>

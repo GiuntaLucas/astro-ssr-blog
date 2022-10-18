@@ -1,0 +1,12 @@
+---
+import Post from '../components/Post.astro';
+import Layout from '../layouts/Layout.astro';
+import { getPosts } from '../api/post';
+
+const posts = await getPosts();
+---
+
+<Layout title="Welcome to Astro.">
+	{posts.map(post => <Post post={post}/>)}
+</Layout>
+

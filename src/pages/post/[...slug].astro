@@ -1,0 +1,12 @@
+---
+import { getComment } from "../../api/comment";
+import Comment from "../../components/Comment.astro";
+import Layout from "../../layouts/Layout.astro";
+const postId = Astro.params.slug.toString().split('/')[0];
+const comments = await getComment(+postId);
+
+---
+
+<Layout title="Astro blog">
+    {comments.map(x => <Comment comment={x}></Comment>)}
+</Layout>

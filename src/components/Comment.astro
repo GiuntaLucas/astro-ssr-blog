@@ -1,0 +1,10 @@
+---
+const {comment} = Astro.props;
+---
+
+<div class="shadow-md m-5 p-5">
+    <div>
+        <h1>{comment.name}</h1>
+        <p class="mt-3 mb-3">{comment.body}</p>
+    </div>
+</div>
